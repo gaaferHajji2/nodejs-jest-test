@@ -17,3 +17,11 @@ test('Test Null', () => {
 
     expect(i).toBeDefined();
 });
+
+const animals = ['cat', 'dog'];
+
+test('Animals Array', ()=> {
+    expect(animals).toContain('cat');
+
+    expect(animals).toBeInstanceOf(Array);
+});
