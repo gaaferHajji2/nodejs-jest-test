@@ -11,5 +11,9 @@ test('addition', ()=> {
 test('Test Null', () => {
     const i = null;
 
+    expect.assertions(2);
+
     expect(i).toBeNull();
+
+    expect(i).toBeDefined();
 });
