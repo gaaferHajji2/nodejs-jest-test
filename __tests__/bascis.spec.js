@@ -25,3 +25,11 @@ test('Animals Array', ()=> {
 
     expect(animals).toBeInstanceOf(Array);
 });
+
+function getData() {
+    throw new Error('Not Found');
+}
+
+test('Test Error Function', ()=>{
+    expect(() => getData()).toThrow();
+});
