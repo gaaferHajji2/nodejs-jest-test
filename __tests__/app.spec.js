@@ -1,7 +1,7 @@
 
-const crypto = require('node:crypto');
+import { randomBytes } from 'node:crypto';
 
-const { getData } = require("../app");
+import { getData } from "../app";
 
 
 jest.mock('node:crypto');
@@ -12,7 +12,7 @@ test("Fetch Data", async () => {
 
     // console.log(res);
 
-    crypto.randomBytes.mockResolvedValueOnce('bytes');
+    randomBytes.mockResolvedValueOnce('bytes');
 
     const res = await getData();
 
@@ -22,7 +22,7 @@ test("Fetch Data", async () => {
 
 test("Fetch Data With Mocking", async () => {
 
-    crypto.randomBytes.mockImplementationOnce(() => Promise.resolve("bytes-02"));
+    randomBytes.mockImplementationOnce(() => Promise.resolve("bytes-02"));
 
     const res = await getData();
 

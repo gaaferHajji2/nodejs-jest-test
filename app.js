@@ -1,11 +1,11 @@
-const crypto = require('node:crypto');
+import { randomBytes } from 'node:crypto';
 
 function getData() {
-    return crypto.randomBytes(20);
+    return randomBytes(20);
 }
 
 // console.log(getData());
 
-module.exports = {
+export default {
     getData,
 };
