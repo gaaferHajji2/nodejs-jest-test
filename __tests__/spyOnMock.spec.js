@@ -1,6 +1,6 @@
-import crypto from 'node:crypto';
+const crypto = require('node:crypto');
 
-import { getData } from '../app';
+const { getData } = require('../app');
 
 test('Test Spy On', async () => {
 

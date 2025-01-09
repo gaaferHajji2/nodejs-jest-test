@@ -1,7 +1,7 @@
 
-import { randomBytes } from 'node:crypto';
+const { randomBytes } = require('node:crypto');
 
-import { getData } from "../app";
+const { getData } = require("../app");
 
 
 jest.mock('node:crypto');

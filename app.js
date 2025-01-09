@@ -1,4 +1,4 @@
-import { randomBytes } from 'node:crypto';
+const { randomBytes } = require('node:crypto');
 
 function getData() {
     return randomBytes(20);
@@ -6,6 +6,6 @@ function getData() {
 
 // console.log(getData());
 
-export default {
+module.exports = {
     getData,
 };
