@@ -14,7 +14,7 @@ test("Fetch Data", async () => {
 
     randomBytes.mockResolvedValueOnce('bytes');
 
-    const res = getData();
+    const res = await getData();
 
     console.log("The Result is: ", res);
 
