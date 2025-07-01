@@ -1,6 +1,6 @@
 const { randomBytes } = require('node:crypto');
 
-function getData() {
+async function getData() {
     return randomBytes(20);
 }
 
