@@ -27,7 +27,7 @@ test('Animals Array', ()=> {
 });
 
 function getData() {
-    throw new Error('Not Found');
+    throw new Error('Not Implemented');
 }
 
 test('Test Error Function', ()=>{
