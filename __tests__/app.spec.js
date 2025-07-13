@@ -1,4 +1,3 @@
-
 const { randomBytes } = require('node:crypto');
 
 const { getData } = require("../app");
