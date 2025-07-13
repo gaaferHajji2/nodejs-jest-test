@@ -1,7 +1,7 @@
-const { randomBytes } = require('node:crypto');
+const crypto = require('node:crypto');
 
 async function getData() {
-    return randomBytes(20);
+    return crypto.randomBytes(20);
 }
 
 // console.log(getData());
