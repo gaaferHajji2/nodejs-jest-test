@@ -3,7 +3,6 @@ const { randomBytes } = require('node:crypto');
 
 const { getData } = require("../app");
 
-
 jest.mock('node:crypto');
 
 test("Fetch Data", async () => {
