@@ -10,37 +10,37 @@ const products = {
 }
 
 beforeAll(()=>{
-    console.log("Before All Tests In Separated Way.");
+    // console.log("Before All Tests In Separated Way.");
 });
 
 afterAll(()=>{
-    console.log("After All Tests In Separated Way.");
+    // console.log("After All Tests In Separated Way.");
 });
 
 beforeEach(()=>{
-    console.log("Before Each In Separated Way");
+    // console.log("Before Each In Separated Way");
 });
 
 afterEach(()=>{
-    console.log("After Each In Separated Way");
+    // console.log("After Each In Separated Way");
 });
 
 describe('Auth Test', () => {
 
     beforeAll(()=>{
-        console.log("Before All Tests In Auth Test.");
+        // console.log("Before All Tests In Auth Test.");
     });
     
     afterAll(()=>{
-        console.log("After All Tests In Auth Test.");
+        // console.log("After All Tests In Auth Test.");
     });
 
     beforeEach(()=>{
-        console.log("Before Each In Auth Test");
+        // console.log("Before Each In Auth Test");
     });
     
     afterEach(()=>{
-        console.log("After Each In Auth Test");
+        // console.log("After Each In Auth Test");
     });
 
     it("Test First User", () => {
@@ -64,19 +64,19 @@ describe('Auth Test', () => {
 describe("Test Products", () => {
 
     beforeAll(()=>{
-        console.log("Before All Tests In Test Products.");
+        // console.log("Before All Tests In Test Products.");
     });
     
     afterAll(()=>{
-        console.log("After All Tests In Test Products.");
+        // console.log("After All Tests In Test Products.");
     });
 
     beforeEach(()=>{
-        console.log("Before Each In Test Products.");
+        // console.log("Before Each In Test Products.");
     });
     
     afterEach(()=>{
-        console.log("After Each In Test Products.");
+        // console.log("After Each In Test Products.");
     });
 
     it("Test Products-01", ()=>{
