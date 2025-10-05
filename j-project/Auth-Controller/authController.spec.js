@@ -10,8 +10,16 @@ const mockReq = () => {
     }
 }
 
+const mockRes = () => {
+    return {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis()
+    }
+}
+
 describe("Register User Tests", () => {
     it("success", async () => {
-        
+        const t1 = await registerUser(mockReq, mockRes)
+        console.log("The result from register user is: ", t1)
     })
 })
