@@ -35,10 +35,10 @@ describe('Register User Tests', () => {
         // This will be ovverrided by the jest.mock
         jest.spyOn(jwt, 'sign').mockResolvedValueOnce('JLoka-Token-01')
 
-        const t4 = mockReq()
-        const t5 = mockRes()
+        const t1 = mockReq()
+        const t2 = mockRes()
 
-        await registerUser(t4, t5)
+        await registerUser(t1, t2)
         
         // const res1 = await t1()
         // const res2 = await t2()
@@ -50,5 +50,14 @@ describe('Register User Tests', () => {
         // expect(res1).toBe('JLoka-01')
         // expect(res2).toMatchObject({ '_id': 1 })
         // expect(res3).toBe('JLoka-Token-01')
+
+        expect(t2.status).toHaveBeenCalledWith(201)
+        expect(t2.json).toHaveBeenCalledWith({ token: 'JLoka-Token-02' })
+        expect(bcrypt.hash).toHaveBeenCalledWith('test@123', 10)
+        expect(User.create).toHaveBeenCalledWith({
+            name: 'jloka-01',
+            email: 'test@test.com',
+            password: 'JLoka-01'
+        })
     })
 })
