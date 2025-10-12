@@ -20,6 +20,15 @@ const mockReq = () => {
     }
 }
 
+const mockInValidReq= () => {
+    return {
+        body: {
+            name: "Jloka-01",
+            email: "test@test.com"
+        }
+    }
+}
+
 const mockRes = () => {
     return {
         status: jest.fn().mockReturnThis(),
@@ -27,12 +36,16 @@ const mockRes = () => {
     }
 }
 
+afterEach(() => {
+    jest.restoreAllMocks()
+})
+
 describe('Register User Tests', () => {
     it('success', async () => {
 
         jest.spyOn(bcrypt, 'hash').mockResolvedValueOnce('JLoka-01')
         jest.spyOn(User, 'create').mockResolvedValueOnce({ _id: 1 })
-        // This will be ovverrided by the jest.mock
+        // This will be overridden by the jest.mock
         jest.spyOn(jwt, 'sign').mockResolvedValueOnce('JLoka-Token-01')
 
         const t1 = mockReq()
@@ -59,5 +72,41 @@ describe('Register User Tests', () => {
             email: 'test@test.com',
             password: 'JLoka-01'
         })
+    })
+
+    it('validation-01', async () => {
+        let invalidReq = mockInValidReq()
+        let res = mockRes()
+
+        await registerUser(invalidReq, res)
+
+        expect(res.status).toHaveBeenCalledWith(400)
+        expect(res.json).toHaveBeenCalledWith({
+            error: "Please enter all values",
+        })
+    })
+
+    it('validation-02', async () => {
+
+        jest.spyOn(bcrypt, 'hash').mockResolvedValueOnce('JLoka-01')
+        jest.spyOn(User, 'create').mockRejectedValueOnce({ code: 11000 })
+
+        let t1 = mockReq()
+        let t2 = mockRes()
+
+        await registerUser(t1, t2)
+
+        // console.log("The res is: ", t2.status)
+
+        expect(t2.status).toHaveBeenCalledWith(400)
+        expect(t2.json).toHaveBeenCalledWith({
+            error: "Duplicate email",
+        })
+    });
+})
+
+describe('Login User', () => {
+    it('success', async () => {
+
     })
 })
