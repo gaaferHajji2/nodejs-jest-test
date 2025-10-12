@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 
 import User from '../models/users'
 import jwt from 'jsonwebtoken'
-import { registerUser } from './authController'
+import { registerUser, loginUser } from './authController'
 import { getJwtToken } from '../utils/helpers'
 
 // This will override the result from jwt.sign
@@ -20,11 +20,28 @@ const mockReq = () => {
     }
 }
 
-const mockInValidReq= () => {
+const mockInValidRegisterReq = () => {
     return {
         body: {
             name: "Jloka-01",
             email: "test@test.com"
+        }
+    }
+}
+
+const mockInvalidLoginReq = () => {
+    return {
+        body: {
+            email: "no@exist.com"
+        }
+    }
+}
+
+const mockInvalidLoginReqUser = () => {
+    return {
+        body: {
+            email: "no@exist.com",
+            password: "Test@123"
         }
     }
 }
@@ -75,7 +92,7 @@ describe('Register User Tests', () => {
     })
 
     it('validation-01', async () => {
-        let invalidReq = mockInValidReq()
+        let invalidReq = mockInValidRegisterReq()
         let res = mockRes()
 
         await registerUser(invalidReq, res)
@@ -108,5 +125,33 @@ describe('Register User Tests', () => {
 describe('Login User', () => {
     it('success', async () => {
 
+    })
+
+    it('validation-01', async () => {
+        let t1 = mockInvalidLoginReq()
+        let t2 = mockRes()
+
+        await loginUser(t1, t2)
+
+        expect(t2.status).toHaveBeenCalledWith(400)
+        expect(t2.json).toHaveBeenCalledWith({
+            error: "Please enter email & Password",
+        })
+    })
+
+    it('validation-02', async () => {
+        jest.spyOn(User, 'findOne').mockReturnValueOnce({
+            select: jest.fn().mockReturnValueOnce(null)
+        })
+
+        let t1 = mockInvalidLoginReqUser()
+        let t2 = mockRes()
+
+        await loginUser(t1, t2)
+
+        expect(t2.status).toHaveBeenCalledWith(401)
+        expect(t2.json).toHaveBeenCalledWith({
+            error: "Invalid Email or Password",
+        })
     })
 })
