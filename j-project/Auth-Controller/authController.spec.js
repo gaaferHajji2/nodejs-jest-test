@@ -123,7 +123,24 @@ describe('Register User Tests', () => {
 
 describe('Login User', () => {
     it('success', async () => {
+let t1 = mockReq()
+        let t2 = mockRes()
 
+        jest.spyOn(User, 'findOne').mockReturnValueOnce({
+            select: jest.fn().mockReturnValueOnce({
+                name: 'jloka-01',
+                email: 'test@test.com',
+                password: 'test@123'
+            })
+        })
+        jest.spyOn(bcrypt, 'compare').mockResolvedValueOnce(true)
+
+        await loginUser(t1, t2)
+
+        expect(t2.status).toHaveBeenCalledWith(200)
+        expect(t2.json).toHaveBeenCalledWith({
+            token: "JLoka-Token-02",
+        })
     })
 
     it('validation-01', async () => {
@@ -165,7 +182,6 @@ describe('Login User', () => {
                 password: 'test@123'
             })
         })
-
         jest.spyOn(bcrypt, 'compare').mockResolvedValueOnce(false)
 
         await loginUser(t1, t2)
