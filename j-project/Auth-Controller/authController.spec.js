@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs'
 import User from '../models/users'
 import jwt from 'jsonwebtoken'
 import { registerUser, loginUser } from './authController'
-import { getJwtToken } from '../utils/helpers'
 
 // This will override the result from jwt.sign
 jest.mock('../utils/helpers.js', () => ({
@@ -146,6 +145,28 @@ describe('Login User', () => {
 
         let t1 = mockInvalidLoginReqUser()
         let t2 = mockRes()
+
+        await loginUser(t1, t2)
+
+        expect(t2.status).toHaveBeenCalledWith(401)
+        expect(t2.json).toHaveBeenCalledWith({
+            error: "Invalid Email or Password",
+        })
+    })
+
+    it('validation-03', async () => {
+        let t1 = mockReq()
+        let t2 = mockRes()
+
+        jest.spyOn(User, 'findOne').mockReturnValueOnce({
+            select: jest.fn().mockReturnValueOnce({
+                name: 'jloka-01',
+                email: 'test@test.com',
+                password: 'test@123'
+            })
+        })
+
+        jest.spyOn(bcrypt, 'compare').mockResolvedValueOnce(false)
 
         await loginUser(t1, t2)
 
