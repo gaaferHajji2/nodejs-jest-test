@@ -70,6 +70,22 @@ describe('Get all jobs with/without query data', () => {
         })
     })
 
+    it('get all jobs with success with keyword', async ()=> {
+        jest.spyOn(Job, 'find').mockReturnValueOnce({
+            limit: jest.fn().mockReturnValueOnce({
+                skip: jest.fn().mockReturnValue([mockJob01])
+            })
+        })
 
+        const mockReq = mockRequest().query = { query:{ keyword: 'Job01' } }
+        const mockRes = mockResponse()
+
+        await getJobs(mockReq, mockRes)
+
+        expect(mockRes.status).toHaveBeenCalledWith(200)
+        expect(mockRes.json).toHaveBeenCalledWith({
+            jobs: [mockJob01]
+        })
+    })
 
 })
