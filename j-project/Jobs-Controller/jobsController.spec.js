@@ -1,6 +1,6 @@
 import Job from '../models/jobs'
 
-import { getJobs } from './jobsController'
+import { getJobs, newJob } from './jobsController'
 
 const mockJob01 = {
     _id: '68f9eaae95bb79cf597aa813',
@@ -88,4 +88,36 @@ describe('Get all jobs with/without query data', () => {
         })
     })
 
+})
+
+describe('Create New Job', () => {
+    it('create new job with user data', async () => {
+        jest.spyOn(Job, 'create').mockResolvedValueOnce(mockJob01)
+        
+        const mockReq = mockRequest()
+        const mockRes = mockResponse()
+
+        mockReq.user.id = '68f9ea9d95bb79cf597aa812'
+
+        await newJob(mockReq, mockRes)
+
+        expect(mockRes.status).toHaveBeenCalledWith(201)
+        expect(mockRes.json).toHaveBeenCalledWith({
+            job: mockJob01
+        })
+    })
+
+    it('create new job with validation error', async () => {
+        jest.spyOn(Job, 'create').mockRejectedValueOnce({ name: 'ValidationError' })
+
+        const mockReq = mockRequest()
+        const mockRes = mockResponse()
+
+        await newJob(mockReq, mockRes)
+
+        expect(mockRes.status).toHaveBeenCalledWith(400)
+        expect(mockRes.json).toHaveBeenCalledWith({
+            error: 'Please enter all values'
+        })
+    })
 })
